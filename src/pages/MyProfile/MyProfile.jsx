@@ -1,6 +1,4 @@
 import { Navigate, Outlet } from 'react-router';
-import Footer from '../../components/Footer/Footer';
-import Navbar from '../../components/Navbar/Navbar';
 
 const MyProfile = () => {
   return (
@@ -14,9 +12,7 @@ const MyProfile = () => {
         // replace
       />
       <div>
-        <Navbar></Navbar>
         <Outlet></Outlet>
-        <Footer></Footer>
       </div>
     </div>
   );

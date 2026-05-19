@@ -1,13 +1,10 @@
-// ================================================================
 import { use } from 'react';
-import { useLocation, Navigate } from 'react-router';
-// import { AuthContext } from './AuthProvider';
+import { useLocation, Navigate, Outlet } from 'react-router'; // Added Outlet
 import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 import { AuthContext } from './AuthContext';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = use(AuthContext);
-
   const location = useLocation();
 
   if (loading) {
@@ -15,7 +12,9 @@ const PrivateRoute = ({ children }) => {
   }
 
   if (user && user?.email) {
-    return children;
+    // If children exist, render them (for Option A).
+    // If no children exist, render the <Outlet /> (for Option B layout groupings).
+    return children ? children : <Outlet />;
   }
 
   return (
@@ -32,12 +31,9 @@ const PrivateRoute = ({ children }) => {
 
 export default PrivateRoute;
 
-// if -> user have! then return children
-// navigate--> Login
-
 // ================================================================ for showing a extra loading
 // import { use, useEffect, useState } from 'react';
-// import { useNavigate, useLocation } from 'react-router';
+// import { useNavigate, useLocation, Outlet} from 'react-router';
 // import { AuthContext } from './AuthProvider';
 // import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
@@ -74,11 +70,49 @@ export default PrivateRoute;
 
 //   // Fix 4: If user exists, securely return the children components
 //   if (user && user?.email) {
-//     return children;
+//     return children ? children : <Outlet />;
 //   }
 
 //   // Fallback return while redirection finishes
 //   return null;
+// };
+
+// export default PrivateRoute;
+
+// ======================================
+// if -> user have! then return children
+// navigate--> Login
+
+// ================================================================ common method
+// import { use } from 'react';
+// import { useLocation, Navigate } from 'react-router';
+// // import { AuthContext } from './AuthProvider';
+// import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
+// import { AuthContext } from './AuthContext';
+
+// const PrivateRoute = ({ children }) => {
+//   const { user, loading } = use(AuthContext);
+
+//   const location = useLocation();
+
+//   if (loading) {
+//     return <LoadingSpinner />;
+//   }
+
+//   if (user && user?.email) {
+//     return children;
+//   }
+
+//   return (
+//     <Navigate
+//       to="/auth/login"
+//       state={{
+//         from: location.pathname,
+//         message: 'Please login first to access this page',
+//       }}
+//       replace
+//     />
+//   );
 // };
 
 // export default PrivateRoute;

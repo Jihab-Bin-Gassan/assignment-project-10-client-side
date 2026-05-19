@@ -1,13 +1,28 @@
+import { Outlet, useNavigation } from 'react-router';
 import Navbar from '../components/Navbar/Navbar';
-import { Outlet } from 'react-router';
 import Footer from '../components/Footer/Footer';
+import LoadingSpinner from '../components/LoadingSpinner/LoadingSpinner';
 
 const RootLayout = () => {
+  const navigation = useNavigation();
+
+  const isLoading = navigation.state === 'loading';
+
   return (
     <div>
-      <Navbar></Navbar>
-      <Outlet></Outlet>
-      <Footer></Footer>
+      <Navbar />
+
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        <div
+          className={`transition-opacity duration-200 ${isLoading ? 'opacity-50' : 'opacity-100'}`}
+        >
+          <Outlet />
+        </div>
+      )}
+
+      <Footer />
     </div>
   );
 };

@@ -1,0 +1,74 @@
+import { GiExpense, GiMoneyStack } from 'react-icons/gi';
+import { MdAccountBalance } from 'react-icons/md';
+import { RiMoneyDollarCircleFill } from 'react-icons/ri';
+
+const FinancialBalance = ({ totalBalance, incomeData, expenses }) => {
+  const { amount: tAmount } = totalBalance;
+  const { amount: iAmount } = incomeData;
+  const { amount: eAmount } = expenses;
+  return (
+    <div>
+      <p className="pt-25 pb-10 font-bold text-[#5c23be] text-4xl text-center">
+        Your Financial Overview
+      </p>
+
+      <div className="flex justify-center gap-x-6">
+        <div className="bg-[#72CFE7] w-110 h-105 rounded-2xl">
+          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+            Total Balance
+          </p>
+          <div className="">
+            <MdAccountBalance className="text-9xl text-[#ffffffb2] ml-5" />
+          </div>
+          <div className="flex justify-between px-7 items-center">
+            <div className="mt-8 flex flex-col gap-y-6">
+              <p className="font-bold text-white text-2xl">
+                $ {tAmount ? tAmount : '000 - N/A'} BALANCE
+              </p>
+              <p className="font-bold text-white text-lg">Current Balance</p>
+            </div>
+            <RiMoneyDollarCircleFill className="text-8xl text-[#3b3b3bc1] mt-10" />
+          </div>
+        </div>
+
+        <div className="bg-[#fbc3f1] w-80 h-105 rounded-2xl">
+          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+            Total Income
+          </p>
+          <div className="">
+            <GiMoneyStack className="text-9xl text-[#ffffffb2] ml-5" />
+          </div>
+          <div className="flex justify-between px-7 items-center">
+            <div className="mt-10 flex flex-col gap-y-6">
+              <p className="font-bold text-[#3b3b3b] text-2xl">
+                $ {iAmount ? iAmount : '000 - N/A'} Income
+              </p>
+              <p className="font-bold text-[#3b3b3b] text-lg">Current Income</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-[#fbe4c2] w-80 h-105 rounded-2xl">
+          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+            Total Expenses
+          </p>
+          <div className="">
+            <GiExpense className="text-9xl text-[#ffffffb2] ml-5" />
+          </div>
+          <div className="flex justify-between px-7 items-center">
+            <div className="mt-10 flex flex-col gap-y-6">
+              <p className="font-bold text-[#3b3b3b] text-2xl">
+                $ {eAmount ? eAmount : '000 - N/A'} Income
+              </p>
+              <p className="font-bold text-[#3b3b3b] text-lg">
+                Current Expenses
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FinancialBalance;

@@ -6,15 +6,15 @@ import FinancialPlanning from '../../components/FinancialPlanning/FinancialPlann
 const Home = () => {
   return (
     <div className="pb-20">
-      <Banner></Banner>
+      <Banner />
       <div className="max-w-11/12 mx-auto">
-        <FinancialOverview></FinancialOverview>
+        <FinancialOverview />
       </div>
       <div className="max-w-11/12 mx-auto">
-        <Budgeting></Budgeting>
+        <Budgeting />
       </div>
       <div className="max-w-11/12 mx-auto">
-        <FinancialPlanning></FinancialPlanning>
+        <FinancialPlanning />
       </div>
     </div>
   );
