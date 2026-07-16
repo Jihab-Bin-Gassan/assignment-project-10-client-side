@@ -1,16 +1,23 @@
 import { GiExpense, GiMoneyStack } from 'react-icons/gi';
 import { MdAccountBalance } from 'react-icons/md';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
+// import { Link } from 'react-router';
 
-const FinancialBalance = ({ totalBalance, incomeData, expenses }) => {
-  const { amount: tAmount } = totalBalance;
-  const { amount: iAmount } = incomeData;
-  const { amount: eAmount } = expenses;
+const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
+  // const { amount: tAmount } = totalBalance;
+  // const { amount: iAmount } = incomeData;
+  // const { _id: i_id } = incomeData;
+  // const { amount: eAmount } = expenses;
   return (
     <div>
-      <p className="pt-25 pb-10 font-bold text-[#5c23be] text-4xl text-center">
-        Your Financial Overview
-      </p>
+      <div className="text-center my-12">
+        <h2 className="text-4xl font-bold text-[#5c23be]">
+          Your Financial Overview
+        </h2>
+        <p className="text-gray-600 mt-3">
+          Observe your financial overview everday.
+        </p>
+      </div>
 
       <div className="flex justify-center gap-x-6">
         <div className="bg-[#72CFE7] w-110 h-105 rounded-2xl">
@@ -21,10 +28,34 @@ const FinancialBalance = ({ totalBalance, incomeData, expenses }) => {
             <MdAccountBalance className="text-9xl text-[#ffffffb2] ml-5" />
           </div>
           <div className="flex justify-between px-7 items-center">
-            <div className="mt-8 flex flex-col gap-y-6">
-              <p className="font-bold text-white text-2xl">
-                $ {tAmount ? tAmount : '000 - N/A'} BALANCE
-              </p>
+            <div className="mt-5 flex flex-col gap-y-3">
+              <div className="flex items-center gap-x-2">
+                <p
+                  className={`font-bold text-2xl ${
+                    totalBalance < 0 ? 'text-red-500' : 'text-white'
+                  }`}
+                >
+                  $ {totalBalance ?? '00 - N/A'}
+                </p>
+                <p className="font-bold text-white text-2xl">Balance</p>
+              </div>
+              {totalBalance === null || totalBalance === undefined ? (
+                <p className="font-bold text-red-600 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  Balance transactions data not found.
+                </p>
+              ) : null}
+
+              {totalBalance === 0 ? (
+                <p className="font-bold text-violet-700 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  You have no balance. Need more income transactions.
+                </p>
+              ) : null}
+              {totalBalance < 0 ? (
+                <p className="font-bold text-violet-700 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  Your expenses are higher than your balance. Need more income
+                  transactions.
+                </p>
+              ) : null}
               <p className="font-bold text-white text-lg">Current Balance</p>
             </div>
             <RiMoneyDollarCircleFill className="text-8xl text-[#3b3b3bc1] mt-10" />
@@ -39,11 +70,40 @@ const FinancialBalance = ({ totalBalance, incomeData, expenses }) => {
             <GiMoneyStack className="text-9xl text-[#ffffffb2] ml-5" />
           </div>
           <div className="flex justify-between px-7 items-center">
-            <div className="mt-10 flex flex-col gap-y-6">
-              <p className="font-bold text-[#3b3b3b] text-2xl">
-                $ {iAmount ? iAmount : '000 - N/A'} Income
-              </p>
+            <div
+              className={`flex flex-col gap-y-3 ${totalIncome === null || totalIncome === undefined || totalIncome === 0 ? 'mt-5' : 'mt-10'}`}
+            >
+              <div className="flex items-center gap-x-2">
+                <p
+                  className={`font-bold text-2xl ${
+                    totalIncome < 0 ? 'text-red-500' : 'text-[#3b3b3b]'
+                  }`}
+                >
+                  $ {totalIncome ?? '00 - N/A'}
+                </p>
+                <p className="font-bold text-[#3b3b3b] text-2xl">Income</p>
+              </div>
+              {totalIncome === null || totalIncome === undefined ? (
+                <p className="font-bold text-red-600 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  Income transactions data not found.
+                </p>
+              ) : null}
+
+              {totalIncome === 0 ? (
+                <p className="font-bold text-violet-700 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  Your income is zero. Need income transactions.
+                </p>
+              ) : null}
+
               <p className="font-bold text-[#3b3b3b] text-lg">Current Income</p>
+              {/* <div className="mt-2">
+                <Link
+                  // to={`/updateOrDetailsIncome/${i_id}`}
+                  className="font-extrabold text-[#000000] text-sm hover:bg-[#ff7ce7] bg-[#ab7bff86] px-4 py-1 rounded-2xl"
+                >
+                  Update/Details Of Income
+                </Link>
+              </div> */}
             </div>
           </div>
         </div>
@@ -56,10 +116,30 @@ const FinancialBalance = ({ totalBalance, incomeData, expenses }) => {
             <GiExpense className="text-9xl text-[#ffffffb2] ml-5" />
           </div>
           <div className="flex justify-between px-7 items-center">
-            <div className="mt-10 flex flex-col gap-y-6">
-              <p className="font-bold text-[#3b3b3b] text-2xl">
-                $ {eAmount ? eAmount : '000 - N/A'} Income
-              </p>
+            <div
+              className={`flex flex-col gap-y-3 ${totalIncome === null || totalIncome === undefined || totalIncome === 0 ? 'mt-5' : 'mt-10'}`}
+            >
+              <div className="flex items-center gap-x-2">
+                <p
+                  className={`font-bold text-2xl ${
+                    totalExpense < 0 ? 'text-red-500' : 'text-[#3b3b3b]'
+                  }`}
+                >
+                  $ {totalExpense ?? '00 - N/A'}
+                </p>
+                <p className="font-bold text-[#3b3b3b] text-2xl">Income</p>
+              </div>
+              {totalExpense === null || totalExpense === undefined ? (
+                <p className="font-bold text-red-600 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
+                  Expense transactions data not found.
+                </p>
+              ) : null}
+
+              {totalExpense === 0 ? (
+                <p className="font-bold text-green-400 text-sm px-3 py-2 bg-green-200 rounded-2xl">
+                  Your expenses are zero. Make expense transactions if you want.
+                </p>
+              ) : null}
               <p className="font-bold text-[#3b3b3b] text-lg">
                 Current Expenses
               </p>

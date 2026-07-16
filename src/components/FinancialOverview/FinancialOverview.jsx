@@ -1,40 +1,212 @@
+// import { useEffect, useState } from 'react';
+// import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+// import FinancialBalance from './FinancialBalance';
+
+// const FinancialOverview = () => {
+//   const [balance, setBalance] = useState(null);
+//   const [loading, setLoading] = useState(true);
+
+//   useEffect(() => {
+//     fetch('http://localhost:3000/balance')
+//       .then(res => res.json())
+//       .then(data => {
+//         setBalance(data);
+//         setLoading(false);
+//       });
+//   }, []);
+
+//   if (loading) {
+//     return <LoadingSpinner />;
+//   }
+
+//   // map all data first
+//   // const allTitles = balance.map(item => item.title);
+
+//   // If you want ONLY one specific item
+//   const totalBalance = balance.find(item => item.title === 'Total Balance');
+//   const incomeData = balance.find(item => item.title === 'Income');
+//   const expenses = balance.find(item => item.title === 'Expenses');
+
+//   return (
+//     <div>
+//       <FinancialBalance
+//         totalBalance={totalBalance}
+//         incomeData={incomeData}
+//         expenses={expenses}
+//       />
+//     </div>
+//   );
+// };
+
+// export default FinancialOverview;
+
+// ===============================================================================
+// import { useEffect, useState } from 'react';
+// import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
+// import FinancialBalance from './FinancialBalance';
+
+// const FinancialOverview = () => {
+//   const [balance, setBalance] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState('');
+
+//   useEffect(() => {
+//     fetch('http://localhost:3000/balance')
+//       .then(res => res.json())
+//       .then(data => {
+//         setBalance(data);
+//       })
+//       .catch(error => {
+//         console.log(error);
+//         setError('Server connection failed');
+//       })
+//       .finally(() => {
+//         setLoading(false);
+//       });
+//   }, []);
+
+//   if (loading) {
+//     return <LoadingSpinner />;
+//   }
+
+//   if (error) {
+//     return <p>{error}</p>;
+//   }
+
+//   const totalBalance = balance.find(item => item.title === 'Total Balance');
+
+//   const incomeData = balance.find(item => item.title === 'Income');
+
+//   const expenses = balance.find(item => item.title === 'Expenses');
+
+//   return (
+//     <div>
+//       <FinancialBalance
+//         totalBalance={totalBalance}
+//         incomeData={incomeData}
+//         expenses={expenses}
+//       />
+//     </div>
+//   );
+// };
+
+// export default FinancialOverview;
+
+// ================================================================================
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import FinancialBalance from './FinancialBalance';
 
 const FinancialOverview = () => {
-  const [balance, setBalance] = useState(null);
+  const [balance, setBalance] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
+  const fetchBalance = async () => {
+    try {
+      const res = await fetch('http://localhost:3000/transactions');
+
+      if (!res.ok) {
+        throw new Error('Server Error');
+      }
+
+      const data = await res.json();
+
+      setBalance(data);
+      setError('');
+      setLoading(false);
+
+      return true; // success
+    } catch (error) {
+      console.log(error);
+      setError('Trying to reconnect...');
+      return false; // failed
+    }
+  };
+
+  // ======= fetchBalance().then() this line have a warning from ESLint. so try to avoid writing code like this.
+  // useEffect(() => {
+  //   let interval;
+
+  //   fetchBalance().then(success => {
+  //     // only retry when failed
+  //     if (!success) {
+  //       interval = setInterval(async () => {
+  //         const retrySuccess = await fetchBalance();
+
+  //         // stop retry after success
+  //         if (retrySuccess) {
+  //           clearInterval(interval);
+  //         }
+  //       }, 3000);
+  //     }
+  //   });
+
+  //   return () => clearInterval(interval);
+  // }, []);
+
+  // ==============
   useEffect(() => {
-    fetch('http://localhost:3000/balance')
-      .then(res => res.json())
-      .then(data => {
-        setBalance(data);
-        setLoading(false);
-      });
+    let interval;
+
+    const loadData = async () => {
+      const success = await fetchBalance();
+
+      if (!success) {
+        interval = setInterval(async () => {
+          const retrySuccess = await fetchBalance();
+
+          if (retrySuccess) {
+            clearInterval(interval);
+          }
+        }, 3000);
+      }
+    };
+
+    loadData();
+
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
-  // map all data first
-  // const allTitles = balance.map(item => item.title);
+  if (error) {
+    return <p>{error}</p>;
+  }
 
-  // If you want ONLY one specific item
-  const totalBalance = balance.find(item => item.title === 'Total Balance');
-  const incomeData = balance.find(item => item.title === 'Income');
-  const expenses = balance.find(item => item.title === 'Expenses');
+  // const incomeData = balance.find(item => item.type === 'Income');
+  // const expensesData = balance.find(item => item.type === 'Expense');
+
+  // const balanceData = incomeData - expensesData;
+
+  const { totalIncome, totalExpense } = balance.reduce(
+    (acc, item) => {
+      if (item.type === 'Income') {
+        acc.totalIncome += Number(item.amount);
+      } else if (item.type === 'Expense') {
+        acc.totalExpense += Number(item.amount);
+      }
+
+      return acc;
+    },
+    {
+      totalIncome: 0,
+      totalExpense: 0,
+    },
+  );
+
+  const totalBalance = totalIncome - totalExpense;
+
+  console.log(totalBalance, totalIncome, totalExpense);
 
   return (
-    <div>
-      <FinancialBalance
-        totalBalance={totalBalance}
-        incomeData={incomeData}
-        expenses={expenses}
-      />
-    </div>
+    <FinancialBalance
+      totalBalance={totalBalance}
+      totalIncome={totalIncome}
+      totalExpense={totalExpense}
+    />
   );
 };
 

@@ -158,6 +158,7 @@ import PrivateRoute from '../provider/PrivateRoute';
 import MyProfile from '../pages/MyProfile/MyProfile';
 import Profile from '../pages/MyProfile/Profile';
 import UpdateProfile from '../pages/MyProfile/UpdateProfile';
+import UpdateOrDetailsIncome from '../components/FinancialOverview/UpdateOrDetailsIncome';
 
 const Router = createBrowserRouter([
   {
@@ -184,6 +185,11 @@ const Router = createBrowserRouter([
           {
             path: 'reports', // Removed leading slash
             Component: Reports,
+          },
+          {
+            path: 'updateOrDetailsIncome/:id', // Removed leading slash
+            loader: ({ params }) => fetch(`http://localhost:3000/balance/${params.id}`),
+            Component: UpdateOrDetailsIncome,
           },
         ],
       },
