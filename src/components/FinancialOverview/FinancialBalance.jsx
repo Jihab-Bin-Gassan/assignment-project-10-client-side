@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { GiExpense, GiMoneyStack } from 'react-icons/gi';
 import { MdAccountBalance } from 'react-icons/md';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
+import { useLocation } from 'react-router';
 // import { Link } from 'react-router';
 
 const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
@@ -8,8 +10,27 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
   // const { amount: iAmount } = incomeData;
   // const { _id: i_id } = incomeData;
   // const { amount: eAmount } = expenses;
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
-    <div>
+    <div id="financial_overview">
       <div className="text-center my-12">
         <h2 className="text-4xl font-bold text-[#5c23be]">
           Your Financial Overview

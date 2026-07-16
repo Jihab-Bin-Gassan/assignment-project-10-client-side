@@ -1,8 +1,29 @@
 import { Target, ShieldCheck, Wallet, HeartHandshake } from 'lucide-react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 const FinancialPlanning = () => {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
-    <section className="py-20 bg-linear-to-br from-[#72CFE7]/20 to-[#fbc3f1]/20 mt-30 mb-10 rounded-2xl">
+    <section id='planning' className="py-20 bg-linear-to-br from-[#72CFE7]/20 to-[#fbc3f1]/20 mt-30 mb-10 rounded-2xl">
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* LEFT CONTENT */}
         <div>

@@ -1,6 +1,29 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router";
+
 const Budgeting = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
   return (
-    <section className="py-16 bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] my-30 rounded-2xl">
+    <section
+      id="budgeting"
+      className="py-16 bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] my-30 rounded-2xl"
+    >
       <div className="max-w-7xl mx-auto px-6">
         {/* Title */}
         <div className="text-center mb-12">

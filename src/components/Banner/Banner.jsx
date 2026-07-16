@@ -1,8 +1,32 @@
 import { ArrowRight } from 'lucide-react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 const Banner = () => {
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash) {
+      const id = location.hash.replace('#', '');
+
+      const element = document.getElementById(id);
+
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({
+            behavior: 'smooth',
+          });
+        }, 100);
+      }
+    }
+  }, [location]);
+
   return (
-    <section className="bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] py-20">
+    <section
+      className="bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] py-20"
+      id="branding"
+    >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">
         {/* LEFT CONTENT */}
         <div>
