@@ -1,6 +1,7 @@
 import { FaFacebookF, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import Logo from '../../assets/Logo.png';
+import { useRef } from 'react';
 // import { HashLink } from 'react-router-hash-link';
 
 const Footer = () => {
@@ -10,9 +11,27 @@ const Footer = () => {
   //   });
   // };
 
+  const termsOfUse = useRef(null);
+
+  const termsOfUseModalOpen = () => {
+    termsOfUse.current.showModal();
+  };
+
+  const privacyPolicy = useRef(null);
+
+  const privacyPolicyModalOpen = () => {
+    privacyPolicy.current.showModal();
+  };
+
+  const cookiePolicy = useRef(null);
+
+  const cookiePolicyModalOpen = () => {
+    cookiePolicy.current.showModal();
+  };
+
   return (
     <div>
-      <footer className="footer sm:footer-horizontal bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] text-base-content p-10">
+      <footer className="footer sm:footer-horizontal bg-linear-to-br from-[#72CFE7]/90 via-[#fbc3f1]/80 to-[#fbe4c2] text-base-content p-10">
         <nav>
           <h6 className="footer-title">Services</h6>
           {/* <button onClick={handleScroll} className="link link-hover">
@@ -57,9 +76,15 @@ const Footer = () => {
         </nav>
         <nav>
           <h6 className="footer-title">Legal</h6>
-          <a className="link link-hover">Terms of use</a>
-          <a className="link link-hover">Privacy policy</a>
-          <a className="link link-hover">Cookie policy</a>
+          <button onClick={termsOfUseModalOpen} className="link link-hover">
+            Terms of use
+          </button>
+          <button onClick={privacyPolicyModalOpen} className="link link-hover">
+            Privacy policy
+          </button>
+          <button onClick={cookiePolicyModalOpen} className="link link-hover">
+            Cookie policy
+          </button>
         </nav>
       </footer>
       <footer className="footer bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] text-base-content border-base-300 border-t px-10 py-4">
@@ -82,17 +107,115 @@ const Footer = () => {
         </div>
         <nav className="md:place-self-center md:justify-self-end">
           <div className="flex items-center gap-4">
-            <a>
+            <a href="https://x.com/" target="_blank">
               <FaXTwitter className="w-7 h-6" />
             </a>
-            <a>
+            <a href="https://www.youtube.com/" target="_blank">
               <FaYoutube className="w-7 h-6" />
             </a>
-            <a>
+            <a href="https://www.facebook.com/" target="_blank">
               <FaFacebookF className="w-7 h-6" />
             </a>
           </div>
         </nav>
+        <dialog ref={termsOfUse} className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box p-0">
+            <div className="h-2 bg-linear-to-r from-violet-600 via-fuchsia-500 to-blue-500"></div>
+            <div className="p-5">
+              <h3 className="font-bold text-lg">Terms of use!</h3>
+              <p className="py-4">
+                Still, no terms of use are applied here. Please check it out
+                later.
+                <br />
+                <br />
+                Press the ESC key or click the button below or click outside to
+                close.
+              </p>
+              <div className="modal-action mt-0">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    // handleCancel();
+                    termsOfUse.current.close();
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+
+        <dialog
+          ref={privacyPolicy}
+          className="modal modal-bottom sm:modal-middle"
+        >
+          <div className="modal-box p-0">
+            <div className="h-2 bg-linear-to-r from-violet-600 via-fuchsia-500 to-blue-500"></div>
+            <div className="p-5">
+              <h3 className="font-bold text-lg">Privacy policy!</h3>
+              <p className="py-4">
+                Still, no privacy policy is applied here. Please check it out
+                later.
+                <br />
+                <br />
+                Press the ESC key or click the button below or click outside to
+                close.
+              </p>
+              <div className="modal-action mt-0">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    // handleCancel();
+                    privacyPolicy.current.close();
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
+
+        <dialog
+          ref={cookiePolicy}
+          className="modal modal-bottom sm:modal-middle"
+        >
+          <div className="modal-box p-0">
+            <div className="h-2 bg-linear-to-r from-violet-600 via-fuchsia-500 to-blue-500"></div>
+            <div className="p-5">
+              <h3 className="font-bold text-lg">Cookie policy!</h3>
+              <p className="py-4">
+                Still, no cookie policy is applied here. Please check it out
+                later.
+                <br />
+                <br />
+                Press the ESC key or click the button below or click outside to
+                close.
+              </p>
+              <div className="modal-action mt-0">
+                <button
+                  className="btn"
+                  onClick={() => {
+                    // handleCancel();
+                    cookiePolicy.current.close();
+                  }}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button>close</button>
+          </form>
+        </dialog>
       </footer>
     </div>
   );

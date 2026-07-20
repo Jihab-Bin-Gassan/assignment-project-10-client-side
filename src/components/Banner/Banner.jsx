@@ -1,9 +1,9 @@
 import { ArrowRight } from 'lucide-react';
 import { useEffect } from 'react';
-import { useLocation } from 'react-router';
+import { Link, useLocation } from 'react-router';
+import bannerImage from '../../assets/login-image.png';
 
 const Banner = () => {
-
   const location = useLocation();
 
   useEffect(() => {
@@ -42,13 +42,12 @@ const Banner = () => {
 
           {/* BUTTONS */}
           <div className="mt-8 flex gap-4">
-            <button className="btn bg-[#5c23be] text-white hover:bg-[#4a1ea3] border-none">
+            <Link
+              to={'/addTransactions'}
+              className="btn bg-[#5c23be] text-white hover:bg-[#4a1ea3] border-none"
+            >
               Get Started <ArrowRight size={18} />
-            </button>
-
-            <button className="btn btn-outline border-[#10B981] text-[#10B981] hover:bg-[#10B981] hover:text-white">
-              Learn More
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -61,7 +60,7 @@ const Banner = () => {
             {/* Image Card */}
             <div className="relative bg-white/70 backdrop-blur-lg p-6 rounded-3xl shadow-xl">
               <img
-                src="https://img.freepik.com/free-vector/financial-dashboard-concept-illustration_114360-1772.jpg"
+                src={bannerImage}
                 alt="finance dashboard"
                 className="w-[320px] md:w-96 rounded-xl"
               />
