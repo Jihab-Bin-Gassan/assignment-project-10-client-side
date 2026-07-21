@@ -84,7 +84,14 @@ const AddTransactions = () => {
 
   console.log('final data', transactionData);
 
-  const today = new Date().toISOString().split('T')[0];
+  // const today = new Date().toISOString().split('T')[0]; // only for backed UTC time
+
+  const now = new Date();
+
+  const today =
+    `${now.getFullYear()}-` +
+    `${String(now.getMonth() + 1).padStart(2, '0')}-` +
+    `${String(now.getDate()).padStart(2, '0')}`; // for client side frontend local time zone
 
   const totalCategoryAmount = transactionData
     .filter(
@@ -617,9 +624,9 @@ const AddTransactions = () => {
                       <p className="text-sm opacity-60 mb-1">Date</p>
 
                       <h2 className="font-bold capitalize">
-                        {new Date(
-                          selectedTransaction?.date,
-                        ).toLocaleDateString()}
+                        {new Date(selectedTransaction?.date).toLocaleDateString(
+                          'en-US',
+                        )}
                       </h2>
                     </div>
                     <div className="bg-base-200 rounded-2xl p-4">

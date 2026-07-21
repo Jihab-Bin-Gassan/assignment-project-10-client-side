@@ -24,7 +24,7 @@ const Banner = () => {
 
   return (
     <section
-      className="bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] py-20"
+      className="bg-linear-to-br from-sky-100 via-indigo-50 to-violet-100 py-20"
       id="branding"
     >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">

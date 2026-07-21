@@ -52,6 +52,7 @@ const AllTransactions = () => {
   const [transactions, setTransactions] = useState([]);
 
   const [sortedTransactions, setSortedTransactions] = useState([]);
+  const [sortedText, setSortedText] = useState('default');
 
   const [selectedTransaction, setSelectedTransaction] = useState(null);
 
@@ -59,6 +60,13 @@ const AllTransactions = () => {
 
   const updateRef = useRef(null);
   console.log(transactions);
+
+  const now = new Date();
+
+  const today =
+    `${now.getFullYear()}-` +
+    `${String(now.getMonth() + 1).padStart(2, '0')}-` +
+    `${String(now.getDate()).padStart(2, '0')}`; // for client side frontend local time zone
 
   const totalCategoryAmount = transactions
     .filter(
@@ -194,17 +202,21 @@ const AllTransactions = () => {
     switch (value) {
       case 'default':
         sorted = [...transactions];
+        setSortedText('default');
         break;
 
       case 'amountHigh':
         sorted.sort((a, b) => Number(b.amount) - Number(a.amount));
+        setSortedText('amountHigh');
         break;
 
       case 'amountLow':
         sorted.sort((a, b) => Number(a.amount) - Number(b.amount));
+        setSortedText('amountLow');
         break;
 
       case 'income':
+        setSortedText('income');
         sorted.sort((a, b) => {
           if (a.type === b.type) return 0;
           return a.type === 'Income' ? -1 : 1;
@@ -212,6 +224,7 @@ const AllTransactions = () => {
         break;
 
       case 'expense':
+        setSortedText('expense');
         sorted.sort((a, b) => {
           if (a.type === b.type) return 0;
           return a.type === 'Expense' ? -1 : 1;
@@ -220,6 +233,7 @@ const AllTransactions = () => {
 
       // category
       case 'salary':
+        setSortedText('salary');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'salary' ? -1 : 1;
@@ -227,6 +241,7 @@ const AllTransactions = () => {
         break;
 
       case 'freelance':
+        setSortedText('freelance');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'freelance' ? -1 : 1;
@@ -234,6 +249,7 @@ const AllTransactions = () => {
         break;
 
       case 'business':
+        setSortedText('business');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'business' ? -1 : 1;
@@ -241,6 +257,7 @@ const AllTransactions = () => {
         break;
 
       case 'transport':
+        setSortedText('transport');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'transport' ? -1 : 1;
@@ -248,6 +265,7 @@ const AllTransactions = () => {
         break;
 
       case 'investment':
+        setSortedText('investment');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'investment' ? -1 : 1;
@@ -255,6 +273,7 @@ const AllTransactions = () => {
         break;
 
       case 'bill':
+        setSortedText('bill');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'bill' ? -1 : 1;
@@ -262,6 +281,7 @@ const AllTransactions = () => {
         break;
 
       case 'rent':
+        setSortedText('rent');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'rent' ? -1 : 1;
@@ -269,6 +289,7 @@ const AllTransactions = () => {
         break;
 
       case 'food':
+        setSortedText('food');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'food' ? -1 : 1;
@@ -276,6 +297,7 @@ const AllTransactions = () => {
         break;
 
       case 'buy':
+        setSortedText('buy');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'buy' ? -1 : 1;
@@ -283,6 +305,7 @@ const AllTransactions = () => {
         break;
 
       case 'others':
+        setSortedText('others');
         sorted.sort((a, b) => {
           if (a.category === b.category) return 0;
           return a.category === 'others' ? -1 : 1;
@@ -290,14 +313,17 @@ const AllTransactions = () => {
         break;
 
       case 'newest':
+        setSortedText('newest');
         sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
         break;
 
       case 'oldest':
+        setSortedText('oldest');
         sorted.sort((a, b) => new Date(a.date) - new Date(b.date));
         break;
 
       default:
+        setSortedText('default');
         sorted = [...transactions];
     }
 
@@ -319,7 +345,12 @@ const AllTransactions = () => {
         <>
           <div className="flex justify-end">
             <div className="dropdown dropdown-end">
-              <label tabIndex={0} className="btn">
+              <label
+                tabIndex={0}
+                className={`btn ${
+                  sortedText !== 'default' && 'bg-[#7835ec] text-white'
+                }`}
+              >
                 Sort By
               </label>
 
@@ -328,21 +359,48 @@ const AllTransactions = () => {
                 className="dropdown-content menu bg-base-100 rounded-box w-56 shadow"
               >
                 <li>
-                  <summary onClick={() => handleSort('default')}>
+                  <summary
+                    className={
+                      sortedText === 'default' && 'bg-[#7835ec] text-white'
+                    }
+                    onClick={() => handleSort('default')}
+                  >
                     Default
                   </summary>
                 </li>
                 <li>
                   <details>
-                    <summary>Date</summary>
+                    <summary
+                      className={
+                        sortedText === 'newest' || sortedText === 'oldest'
+                          ? 'bg-[#9963f7a8] text-white'
+                          : 'bg-white text-black'
+                      }
+                    >
+                      Date
+                    </summary>
 
                     <ul>
                       <li>
-                        <a onClick={() => handleSort('newest')}>Newest</a>
+                        <a
+                          className={
+                            sortedText === 'newest' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('newest')}
+                        >
+                          Newest
+                        </a>
                       </li>
 
                       <li>
-                        <a onClick={() => handleSort('oldest')}>Oldest</a>
+                        <a
+                          className={
+                            sortedText === 'oldest' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('oldest')}
+                        >
+                          Oldest
+                        </a>
                       </li>
                     </ul>
                   </details>
@@ -350,17 +408,38 @@ const AllTransactions = () => {
 
                 <li>
                   <details>
-                    <summary>Amount</summary>
+                    <summary
+                      className={
+                        sortedText === 'amountHigh' ||
+                        sortedText === 'amountLow'
+                          ? 'bg-[#9963f7a8] text-white'
+                          : 'bg-white text-black'
+                      }
+                    >
+                      Amount
+                    </summary>
 
                     <ul>
                       <li>
-                        <a onClick={() => handleSort('amountHigh')}>
+                        <a
+                          className={
+                            sortedText === 'amountHigh' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('amountHigh')}
+                        >
                           High → Low
                         </a>
                       </li>
 
                       <li>
-                        <a onClick={() => handleSort('amountLow')}>
+                        <a
+                          className={
+                            sortedText === 'amountLow' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('amountLow')}
+                        >
                           Low → High
                         </a>
                       </li>
@@ -370,15 +449,36 @@ const AllTransactions = () => {
 
                 <li>
                   <details>
-                    <summary>Type</summary>
+                    <summary
+                      className={
+                        sortedText === 'income' || sortedText === 'expense'
+                          ? 'bg-[#9963f7a8] text-white'
+                          : 'bg-white text-black'
+                      }
+                    >
+                      Type
+                    </summary>
 
                     <ul>
                       <li>
-                        <a onClick={() => handleSort('income')}>Income First</a>
+                        <a
+                          className={
+                            sortedText === 'income' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('income')}
+                        >
+                          Income First
+                        </a>
                       </li>
 
                       <li>
-                        <a onClick={() => handleSort('expense')}>
+                        <a
+                          className={
+                            sortedText === 'expense' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('expense')}
+                        >
                           Expense First
                         </a>
                       </li>
@@ -388,40 +488,129 @@ const AllTransactions = () => {
 
                 <li>
                   <details>
-                    <summary>Category</summary>
+                    <summary
+                      className={
+                        sortedText === 'salary' ||
+                        sortedText === 'freelance' ||
+                        sortedText === 'business' ||
+                        sortedText === 'transport' ||
+                        sortedText === 'investment' ||
+                        sortedText === 'bill' ||
+                        sortedText === 'rent' ||
+                        sortedText === 'food' ||
+                        sortedText === 'buy' ||
+                        sortedText === 'others'
+                          ? 'bg-[#9963f7a8] text-white'
+                          : 'bg-white text-black'
+                      }
+                    >
+                      Category
+                    </summary>
 
                     <ul>
                       <li>
-                        <a onClick={() => handleSort('salary')}>Salary</a>
+                        <a
+                          className={
+                            sortedText === 'salary' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('salary')}
+                        >
+                          Salary
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('freelance')}>Freelance</a>
+                        <a
+                          className={
+                            sortedText === 'freelance' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('freelance')}
+                        >
+                          Freelance
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('business')}>Business</a>
+                        <a
+                          className={
+                            sortedText === 'business' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('business')}
+                        >
+                          Business
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('transport')}>Transport</a>
+                        <a
+                          className={
+                            sortedText === 'transport' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('transport')}
+                        >
+                          Transport
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('investment')}>
+                        <a
+                          className={
+                            sortedText === 'investment' &&
+                            'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('investment')}
+                        >
                           Investment
                         </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('bill')}>Bill</a>
+                        <a
+                          className={
+                            sortedText === 'bill' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('bill')}
+                        >
+                          Bill
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('rent')}>Rent</a>
+                        <a
+                          className={
+                            sortedText === 'rent' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('rent')}
+                        >
+                          Rent
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('food')}>Food</a>
+                        <a
+                          className={
+                            sortedText === 'food' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('food')}
+                        >
+                          Food
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('buy')}>Buy</a>
+                        <a
+                          className={
+                            sortedText === 'buy' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('buy')}
+                        >
+                          Buy
+                        </a>
                       </li>
                       <li>
-                        <a onClick={() => handleSort('others')}>Others</a>
+                        <a
+                          className={
+                            sortedText === 'others' && 'bg-[#7835ec] text-white'
+                          }
+                          onClick={() => handleSort('others')}
+                        >
+                          Others
+                        </a>
                       </li>
                     </ul>
                   </details>
@@ -548,7 +737,9 @@ const AllTransactions = () => {
                 <p className="text-sm opacity-60 mb-1">Date</p>
 
                 <h2 className="font-bold capitalize">
-                  {new Date(selectedTransaction?.date).toLocaleDateString()}
+                  {new Date(selectedTransaction?.date).toLocaleDateString(
+                    'en-US',
+                  )}
                 </h2>
               </div>
               <div className="bg-base-200 rounded-2xl p-4">
@@ -683,6 +874,7 @@ const AllTransactions = () => {
                       type="date"
                       name="date"
                       // onChange={handleChange}
+                      defaultValue={today}
                       className="grow"
                     />
                   </label>

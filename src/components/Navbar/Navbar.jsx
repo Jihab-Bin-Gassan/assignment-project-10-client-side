@@ -110,7 +110,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2]">
+    <div className="bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200">
       <div className="max-lg:collapse rounded-md w-full">
         <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />
         <label

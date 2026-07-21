@@ -1,5 +1,5 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router';
 
 const Budgeting = () => {
   const location = useLocation();
@@ -19,10 +19,11 @@ const Budgeting = () => {
       }
     }
   }, [location]);
+
   return (
     <section
       id="budgeting"
-      className="py-16 bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] my-30 rounded-2xl"
+      className="py-16 bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 my-30 rounded-2xl"
     >
       <div className="max-w-7xl mx-auto px-6">
         {/* Title */}

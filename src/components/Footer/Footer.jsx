@@ -31,7 +31,7 @@ const Footer = () => {
 
   return (
     <div>
-      <footer className="footer sm:footer-horizontal bg-linear-to-br from-[#72CFE7]/90 via-[#fbc3f1]/80 to-[#fbe4c2] text-base-content p-10">
+      <footer className="footer sm:footer-horizontal bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 text-base-content p-10">
         <nav>
           <h6 className="footer-title">Services</h6>
           {/* <button onClick={handleScroll} className="link link-hover">
@@ -87,7 +87,7 @@ const Footer = () => {
           </button>
         </nav>
       </footer>
-      <footer className="footer bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] text-base-content border-base-300 border-t px-10 py-4">
+      <footer className="footer bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 text-base-content border-base-300 border-t px-10 py-4">
         <div className="">
           <Link
             to={'/'}

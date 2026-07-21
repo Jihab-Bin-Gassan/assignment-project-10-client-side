@@ -8,24 +8,72 @@ import {
   YAxis,
 } from 'recharts';
 
-const ResultsChart = ({ totalIncome, totalExpense, totalBalance }) => {
+const ResultsChart = ({
+  totalIncome,
+  totalExpense,
+  totalBalance,
+  selectedMonthYear,
+}) => {
   const chartData = [
     {
+      date: selectedMonthYear,
       type: 'Income',
       amount: totalIncome,
     },
     {
+      date: selectedMonthYear,
       type: 'Expense',
       amount: totalExpense,
     },
     {
+      date: selectedMonthYear,
       type: 'Balance',
       amount: totalBalance,
     },
   ];
 
+  const CustomTooltip = ({ active, payload }) => {
+    if (active && payload && payload.length) {
+      const data = payload[0].payload;
+
+      return (
+        <div className="bg-white border rounded-xl shadow-lg p-4">
+          <p
+            className={`font-bold ${
+              data.type === 'Income'
+                ? 'text-green-600'
+                : data.type === 'Expense'
+                  ? 'text-red-600'
+                  : 'text-[#5c23be]'
+            }`}
+          >
+            {data.type}
+          </p>
+
+          <p
+            className={
+              data.type === 'Income'
+                ? 'text-green-600'
+                : data.type === 'Expense'
+                  ? 'text-red-600'
+                  : 'text-[#5c23be]'
+            }
+          >
+            Amount: <strong>${data.amount}</strong>
+          </p>
+
+          <p className="text-blue-500">
+            Date: <strong>{data.date || 'All Time Periods'}</strong>
+          </p>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <div className="w-2/3 h-90 my-20">
+    <div className="w-4/5 h-120 mt-15 mb-20">
       <p className="text-[#5c23be] text-lg font-bold">Report By Chart</p>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
@@ -59,7 +107,21 @@ const ResultsChart = ({ totalIncome, totalExpense, totalBalance }) => {
             }}
           />
 
-          <Tooltip formatter={value => [`$${value}`, 'Amount']} />
+          {/* <Tooltip formatter={value => [`$${value}`, 'Amount']} /> */}
+
+          {/* ================================================= */}
+          {/* <Tooltip
+            labelFormatter={(label, payload) => {
+              if (payload.length) {
+                return `${label} (${payload[0].payload.date})`;
+              }
+              return label;
+            }}
+            formatter={value => [`$${value}`, 'Amount']}
+          /> */}
+
+          {/* ================================================= */}
+          <Tooltip content={CustomTooltip} />
 
           <Bar dataKey="amount">
             {chartData.map((entry, index) => (
@@ -67,10 +129,10 @@ const ResultsChart = ({ totalIncome, totalExpense, totalBalance }) => {
                 key={index}
                 fill={
                   entry.type === 'Income'
-                    ? '#2cdda2dd'
+                    ? '#14ff99'
                     : entry.type === 'Expense'
-                      ? '#f45151ec'
-                      : '#7835ecde'
+                      ? '#ff1b1bec'
+                      : '#6811ff'
                 }
               />
             ))}

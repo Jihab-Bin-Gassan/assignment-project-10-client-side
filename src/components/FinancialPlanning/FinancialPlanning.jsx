@@ -23,7 +23,10 @@ const FinancialPlanning = () => {
   }, [location]);
 
   return (
-    <section id='planning' className="py-20 bg-linear-to-br from-[#72CFE7]/20 to-[#fbc3f1]/20 mt-30 mb-10 rounded-2xl">
+    <section
+      id="planning"
+      className="py-20 bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 mt-30 mb-10 rounded-2xl"
+    >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* LEFT CONTENT */}
         <div>

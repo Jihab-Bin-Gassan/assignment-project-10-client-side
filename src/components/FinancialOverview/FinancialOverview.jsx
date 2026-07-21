@@ -202,11 +202,13 @@ const FinancialOverview = () => {
   console.log(totalBalance, totalIncome, totalExpense);
 
   return (
-    <FinancialBalance
-      totalBalance={totalBalance}
-      totalIncome={totalIncome}
-      totalExpense={totalExpense}
-    />
+    <div className="py-10">
+      <FinancialBalance
+        totalBalance={totalBalance}
+        totalIncome={totalIncome}
+        totalExpense={totalExpense}
+      />
+    </div>
   );
 };
 

@@ -41,8 +41,8 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
       </div>
 
       <div className="flex justify-center gap-x-6">
-        <div className="bg-[#72CFE7] w-110 h-105 rounded-2xl">
-          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+        <div className="bg-linear-to-br from-[#6b96e5] via-[#83abf5] to-[#5f86d0] w-110 h-105 rounded-2xl">
+          <p className="px-5 py-10 text-white font-semibold text-2xl">
             Total Balance
           </p>
           <div className="">
@@ -83,7 +83,7 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
           </div>
         </div>
 
-        <div className="bg-[#fbc3f1] w-80 h-105 rounded-2xl">
+        <div className="bg-linear-to-br from-[#55d39d] via-[#60e2aa] to-[#3ea478] w-80 h-105 rounded-2xl">
           <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
             Total Income
           </p>
@@ -129,7 +129,7 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
           </div>
         </div>
 
-        <div className="bg-[#fbe4c2] w-80 h-105 rounded-2xl">
+        <div className="bg-linear-to-br from-[#b6a4fee7] via-[#c8baffe7] to-[#b6a3ffe7] w-80 h-105 rounded-2xl">
           <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
             Total Expenses
           </p>
