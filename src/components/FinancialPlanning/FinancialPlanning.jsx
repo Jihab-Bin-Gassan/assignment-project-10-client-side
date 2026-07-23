@@ -1,10 +1,11 @@
 import { Target, ShieldCheck, Wallet, HeartHandshake } from 'lucide-react';
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { useLocation } from 'react-router';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const FinancialPlanning = () => {
-
   const location = useLocation();
+  const { theme } = use(ThemeContext);
 
   useEffect(() => {
     if (location.hash) {
@@ -25,7 +26,7 @@ const FinancialPlanning = () => {
   return (
     <section
       id="planning"
-      className="py-20 bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 mt-30 mb-10 rounded-2xl"
+      className={`py-20 mt-30 mb-10 rounded-2xl ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
     >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         {/* LEFT CONTENT */}
@@ -42,7 +43,9 @@ const FinancialPlanning = () => {
 
           <div className="grid grid-cols-2 gap-5">
             {/* Item 1 */}
-            <div className="bg-white p-5 rounded-2xl shadow hover:shadow-lg transition">
+            <div
+              className={`${theme === 'dark' ? 'bg-base-300' : 'bg-white'} p-5 rounded-2xl shadow hover:shadow-lg transition`}
+            >
               <Target className="text-[#10B981] mb-2" size={28} />
               <h4 className="font-semibold text-[#5c23be]">Achieve Goals</h4>
               <p className="text-sm text-gray-500">
@@ -51,7 +54,9 @@ const FinancialPlanning = () => {
             </div>
 
             {/* Item 2 */}
-            <div className="bg-white p-5 rounded-2xl shadow hover:shadow-lg transition">
+            <div
+              className={`${theme === 'dark' ? 'bg-base-300' : 'bg-white'} p-5 rounded-2xl shadow hover:shadow-lg transition`}
+            >
               <ShieldCheck className="text-[#72CFE7] mb-2" size={28} />
               <h4 className="font-semibold text-[#5c23be]">Be Prepared</h4>
               <p className="text-sm text-gray-500">
@@ -60,7 +65,9 @@ const FinancialPlanning = () => {
             </div>
 
             {/* Item 3 */}
-            <div className="bg-white p-5 rounded-2xl shadow hover:shadow-lg transition">
+            <div
+              className={`${theme === 'dark' ? 'bg-base-300' : 'bg-white'} p-5 rounded-2xl shadow hover:shadow-lg transition`}
+            >
               <Wallet className="text-[#fbc3f1] mb-2" size={28} />
               <h4 className="font-semibold text-[#5c23be]">Build Wealth</h4>
               <p className="text-sm text-gray-500">
@@ -69,7 +76,9 @@ const FinancialPlanning = () => {
             </div>
 
             {/* Item 4 */}
-            <div className="bg-white p-5 rounded-2xl shadow hover:shadow-lg transition">
+            <div
+              className={`${theme === 'dark' ? 'bg-base-300' : 'bg-white'} p-5 rounded-2xl shadow hover:shadow-lg transition`}
+            >
               <HeartHandshake className="text-[#10B981] mb-2" size={28} />
               <h4 className="font-semibold text-[#5c23be]">Reduce Stress</h4>
               <p className="text-sm text-gray-500">

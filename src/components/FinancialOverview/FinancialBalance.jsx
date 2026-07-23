@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { GiExpense, GiMoneyStack } from 'react-icons/gi';
 import { MdAccountBalance } from 'react-icons/md';
 import { RiMoneyDollarCircleFill } from 'react-icons/ri';
 import { useLocation } from 'react-router';
+import { ThemeContext } from '../../provider/ThemeContext';
 // import { Link } from 'react-router';
 
 const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
@@ -10,6 +11,8 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
   // const { amount: iAmount } = incomeData;
   // const { _id: i_id } = incomeData;
   // const { amount: eAmount } = expenses;
+
+  const { theme } = use(ThemeContext);
 
   const location = useLocation();
 
@@ -41,7 +44,9 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
       </div>
 
       <div className="flex justify-center gap-x-6">
-        <div className="bg-linear-to-br from-[#6b96e5] via-[#83abf5] to-[#5f86d0] w-110 h-105 rounded-2xl">
+        <div
+          className={`w-110 h-105 rounded-2xl ${theme === 'dark' ? 'bg-base-300' : 'bg-linear-to-br from-[#6b96e5] via-[#83abf5] to-[#5f86d0]'}`}
+        >
           <p className="px-5 py-10 text-white font-semibold text-2xl">
             Total Balance
           </p>
@@ -83,8 +88,14 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
           </div>
         </div>
 
-        <div className="bg-linear-to-br from-[#55d39d] via-[#60e2aa] to-[#3ea478] w-80 h-105 rounded-2xl">
-          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+        <div
+          className={` w-80 h-105 rounded-2xl ${theme === 'dark' ? 'bg-base-300' : 'bg-linear-to-br from-[#55d39d] via-[#60e2aa] to-[#3ea478'}`}
+        >
+          <p
+            className={`px-5 py-10 font-semibold text-2xl ${
+              theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+            }`}
+          >
             Total Income
           </p>
           <div className="">
@@ -97,12 +108,22 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
               <div className="flex items-center gap-x-2">
                 <p
                   className={`font-bold text-2xl ${
-                    totalIncome < 0 ? 'text-red-500' : 'text-[#3b3b3b]'
+                    totalIncome < 0
+                      ? 'text-red-500'
+                      : theme === 'dark'
+                        ? 'text-white'
+                        : 'text-[#3b3b3b]'
                   }`}
                 >
                   $ {totalIncome ?? '00 - N/A'}
                 </p>
-                <p className="font-bold text-[#3b3b3b] text-2xl">Income</p>
+                <p
+                  className={`font-bold text-2xl ${
+                    theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+                  }`}
+                >
+                  Income
+                </p>
               </div>
               {totalIncome === null || totalIncome === undefined ? (
                 <p className="font-bold text-red-600 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
@@ -116,7 +137,13 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
                 </p>
               ) : null}
 
-              <p className="font-bold text-[#3b3b3b] text-lg">Current Income</p>
+              <p
+                className={`font-bold text-lg ${
+                  theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+                }`}
+              >
+                Current Income
+              </p>
               {/* <div className="mt-2">
                 <Link
                   // to={`/updateOrDetailsIncome/${i_id}`}
@@ -129,8 +156,14 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
           </div>
         </div>
 
-        <div className="bg-linear-to-br from-[#b6a4fee7] via-[#c8baffe7] to-[#b6a3ffe7] w-80 h-105 rounded-2xl">
-          <p className="px-5 py-10 text-[#3b3b3b] font-semibold text-2xl">
+        <div
+          className={`w-80 h-105 rounded-2xl ${theme === 'dark' ? 'bg-base-300' : 'bg-linear-to-br from-[#b6a4fee7] via-[#c8baffe7] to-[#b6a3ffe7]'}`}
+        >
+          <p
+            className={`px-5 py-10 font-semibold text-2xl  ${
+              theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+            }`}
+          >
             Total Expenses
           </p>
           <div className="">
@@ -143,12 +176,22 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
               <div className="flex items-center gap-x-2">
                 <p
                   className={`font-bold text-2xl ${
-                    totalExpense < 0 ? 'text-red-500' : 'text-[#3b3b3b]'
+                    totalExpense < 0
+                      ? 'text-red-500'
+                      : theme === 'dark'
+                        ? 'text-white'
+                        : 'text-[#3b3b3b]'
                   }`}
                 >
                   $ {totalExpense ?? '00 - N/A'}
                 </p>
-                <p className="font-bold text-[#3b3b3b] text-2xl">Income</p>
+                <p
+                  className={`font-bold text-2xl  ${
+                    theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+                  }`}
+                >
+                  Income
+                </p>
               </div>
               {totalExpense === null || totalExpense === undefined ? (
                 <p className="font-bold text-red-600 text-sm px-3 py-2 bg-violet-400 rounded-2xl">
@@ -161,7 +204,11 @@ const FinancialBalance = ({ totalBalance, totalIncome, totalExpense }) => {
                   Your expenses are zero. Make expense transactions if you want.
                 </p>
               ) : null}
-              <p className="font-bold text-[#3b3b3b] text-lg">
+              <p
+                className={`font-bold text-lg  ${
+                  theme === 'dark' ? 'text-white' : 'text-[#3b3b3b]'
+                }`}
+              >
                 Current Expenses
               </p>
             </div>

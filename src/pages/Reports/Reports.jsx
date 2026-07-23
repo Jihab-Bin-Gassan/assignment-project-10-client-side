@@ -6,9 +6,11 @@ import { AuthContext } from '../../provider/AuthContext';
 import { Link } from 'react-router';
 import { IoIosArrowBack } from 'react-icons/io';
 import { IoBarChart } from 'react-icons/io5';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const Reports = () => {
   const { user } = use(AuthContext);
+  const { theme } = use(ThemeContext);
   const [transactions, setTransactions] = useState([]);
   const [selectedMonthYear, setSelectedMonthYear] = useState('');
   const now = new Date();
@@ -123,9 +125,11 @@ const Reports = () => {
             Default - Comprehensive Report Of All Time Periods
           </button>
         </div> */}
-          <div className="bg-white drop-shadow-sm rounded-3xl border border-violet-100 p-3 mb-10">
+          <div
+            className={`${theme === 'dark' ? 'bg-base-100' : 'bg-white'} drop-shadow-sm rounded-3xl border border-violet-100 p-3 mb-10`}
+          >
             <div
-              className={`flex justify-between p-3 rounded-3xl items-center ${selectedMonthYear === '' ? 'bg-gray-100' : 'bg-white'}`}
+              className={`flex justify-between p-3 rounded-3xl items-center ${selectedMonthYear === '' && theme === 'light' ? 'bg-gray-100' : selectedMonthYear === '' && theme === 'dark' ? 'bg-base-300' : 'bg-base-100'}`}
             >
               <div>
                 <h3 className="text-2xl font-bold text-[#5c23be]">
@@ -138,7 +142,7 @@ const Reports = () => {
               </div>
               <div className="flex flex-col gap-2">
                 {selectedMonthYear === '' ? (
-                  <p className="font-semibold text-[#3B1E6D]">
+                  <p className="font-semibold text-[#522e90]">
                     Default selected
                   </p>
                 ) : (
@@ -156,7 +160,7 @@ const Reports = () => {
             </div>
             <div className="border-t-2 border-dotted border-gray-300 mt-4 mb-4"></div>
             <div
-              className={`flex flex-col lg:flex-row lg:items-end lg:justify-between p-3 rounded-3xl ${selectedMonthYear === '' ? 'bg-white' : 'bg-gray-100'}`}
+              className={`flex flex-col lg:flex-row lg:items-end lg:justify-between p-3 rounded-3xl ${selectedMonthYear === '' && theme === 'light' ? 'bg-white' : selectedMonthYear === '' && theme === 'dark' ? 'bg-base-100' : 'bg-base-300'}`}
             >
               {/* Left Side */}
               <div>
@@ -176,7 +180,7 @@ const Reports = () => {
                 className="flex flex-wrap items-end gap-3"
               >
                 <div className="flex flex-col">
-                  <label className="font-semibold text-[#3B1E6D] mb-2">
+                  <label className="font-semibold text-[#522e90] mb-2">
                     Month & Year
                   </label>
 
@@ -193,7 +197,7 @@ const Reports = () => {
                   {selectedMonthYear === '' ? (
                     ''
                   ) : (
-                    <p className="font-semibold text-[#3B1E6D]">Sorted</p>
+                    <p className="font-semibold text-[#522e90]">Sorted</p>
                   )}
                   <button
                     type="submit"
@@ -207,19 +211,38 @@ const Reports = () => {
           </div>
 
           {filteredTransactions.length > 0 ? (
-            <div className="flex justify-center">
-              <div className="w-full">
-                <ResultsChart
-                  totalIncome={totalIncome}
-                  totalExpense={totalExpense}
-                  totalBalance={totalBalance}
-                  selectedMonthYear={selectedMonthYear}
-                />
-                <p className="text-gray-400 text-xl font-medium text-center underline">
-                  Chart of the transactions
+            <>
+              <div className="flex justify-center">
+                <div className="w-full">
+                  <ResultsChart
+                    totalIncome={totalIncome}
+                    totalExpense={totalExpense}
+                    totalBalance={totalBalance}
+                    selectedMonthYear={selectedMonthYear}
+                  />
+                  <p className="text-gray-400 text-xl font-medium text-center underline">
+                    Chart of the transactions
+                  </p>
+                </div>
+              </div>
+              <div className="p-8 mt-10">
+                <h4 className="text-3xl font-bold text-[#5c23be] mb-5">
+                  Description:
+                </h4>
+
+                <p className="text-gray-700 text-lg leading-8 text-justify">
+                  The report chart presents a comprehensive overview of your
+                  financial activities by comparing total income, total
+                  expenses, and the resulting balance within the selected
+                  period. It enables you to quickly identify financial trends,
+                  evaluate spending habits, measure savings, and understand your
+                  overall financial health. Regularly reviewing this report can
+                  help you make informed financial decisions, optimize your
+                  budget, and maintain better control over your personal
+                  finances.
                 </p>
               </div>
-            </div>
+            </>
           ) : (
             <>
               <p className="py-10 text-xl text-gray-400 text-center">

@@ -1,10 +1,12 @@
 import { ArrowRight } from 'lucide-react';
-import { useEffect } from 'react';
+import { use, useEffect } from 'react';
 import { Link, useLocation } from 'react-router';
 import bannerImage from '../../assets/login-image.png';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const Banner = () => {
   const location = useLocation();
+  const { theme } = use(ThemeContext);
 
   useEffect(() => {
     if (location.hash) {
@@ -24,7 +26,7 @@ const Banner = () => {
 
   return (
     <section
-      className="bg-linear-to-br from-sky-100 via-indigo-50 to-violet-100 py-20"
+      className={`py-20 ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-sky-100 via-indigo-50 to-violet-100'}`}
       id="branding"
     >
       <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 items-center gap-12">

@@ -1,3 +1,4 @@
+import { use } from 'react';
 import {
   Bar,
   BarChart,
@@ -7,6 +8,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const ResultsChart = ({
   totalIncome,
@@ -31,6 +33,8 @@ const ResultsChart = ({
       amount: totalBalance,
     },
   ];
+
+  const { theme } = use(ThemeContext);
 
   const CustomTooltip = ({ active, payload }) => {
     if (active && payload && payload.length) {
@@ -128,11 +132,19 @@ const ResultsChart = ({
               <Cell
                 key={index}
                 fill={
-                  entry.type === 'Income'
+                  entry.type === 'Income' && theme === 'light'
                     ? '#14ff99'
-                    : entry.type === 'Expense'
-                      ? '#ff1b1bec'
-                      : '#6811ff'
+                    : entry.type === 'Income' && theme === 'dark'
+                      ? '#19422a'
+                      : entry.type === 'Expense' && theme === 'light'
+                        ? '#ff1b1bec'
+                        : entry.type === 'Expense' && theme === 'dark'
+                          ? '#8B0000'
+                          : entry.type !== 'Expense' &&
+                              entry.type !== 'Income' &&
+                              theme !== 'dark'
+                            ? '#9400D3'
+                            : '#5b0453'
                 }
               />
             ))}

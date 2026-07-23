@@ -10,10 +10,13 @@ import { MdLogin, MdLogout, MdOutlineManageAccounts } from 'react-icons/md';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../provider/AuthContext';
+import { ThemeContext } from '../../provider/ThemeContext';
 // import { UserPen } from 'lucide-react';
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);
+  const { theme, toggleTheme } = use(ThemeContext);
+
   const handleLogOut = () => {
     console.log('user trying to logout');
     logOut()
@@ -106,11 +109,18 @@ const Navbar = () => {
           </NavLink>
         )}
       </li>
+      <li>
+        <button onClick={toggleTheme} className="btn btn-circle">
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
+      </li>
     </>
   );
 
   return (
-    <div className="bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200">
+    <div
+      className={`${theme === 'dark' ? 'bg-base-200' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
+    >
       <div className="max-lg:collapse rounded-md w-full">
         <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />
         <label

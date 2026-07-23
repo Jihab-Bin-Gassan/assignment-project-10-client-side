@@ -1,10 +1,12 @@
 import { FaFacebookF, FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import { Link } from 'react-router';
 import Logo from '../../assets/Logo.png';
-import { useRef } from 'react';
+import { use, useRef } from 'react';
+import { ThemeContext } from '../../provider/ThemeContext';
 // import { HashLink } from 'react-router-hash-link';
 
 const Footer = () => {
+  const { theme } = use(ThemeContext);
   // const handleScroll = () => {
   //   document.getElementById('Branding')?.scrollIntoView({
   //     behavior: 'smooth',
@@ -31,7 +33,9 @@ const Footer = () => {
 
   return (
     <div>
-      <footer className="footer sm:footer-horizontal bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 text-base-content p-10">
+      <footer
+        className={`footer sm:footer-horizontal text-base-content p-10 ${theme === 'dark' ? 'bg-base-300' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
+      >
         <nav>
           <h6 className="footer-title">Services</h6>
           {/* <button onClick={handleScroll} className="link link-hover">
@@ -87,7 +91,9 @@ const Footer = () => {
           </button>
         </nav>
       </footer>
-      <footer className="footer bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200 text-base-content border-base-300 border-t px-10 py-4">
+      <footer
+        className={`footer text-base-content border-base-300 border-t px-10 py-4 ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
+      >
         <div className="">
           <Link
             to={'/'}

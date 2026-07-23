@@ -12,9 +12,14 @@
   }
 }
 
-/* It is working now. */
-@plugin "daisyui" {
+/* @plugin "daisyui" {
   themes: light --default;
+} */
+
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark;
 }
 
 /* ============================================== common color setting with daisy ui */
@@ -23,4 +28,9 @@
   default: true;
   --color-primary: #5c23be;
   --color-secondary: #10b981;
+}
+@plugin "daisyui/theme" {
+  name: 'dark';
+  --color-primary: #5d1eca;
+  --color-secondary: #07845a;
 }
