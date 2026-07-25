@@ -6,7 +6,13 @@ import { IoMdAddCircleOutline } from 'react-icons/io';
 import { RiHome4Line } from 'react-icons/ri';
 import { use } from 'react';
 // import { AuthContext } from '../../provider/AuthProvider';
-import { MdLogin, MdLogout, MdOutlineManageAccounts } from 'react-icons/md';
+import {
+  MdDarkMode,
+  MdLightMode,
+  MdLogin,
+  MdLogout,
+  MdOutlineManageAccounts,
+} from 'react-icons/md';
 import { FaRegUserCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../provider/AuthContext';
@@ -24,7 +30,7 @@ const Navbar = () => {
         // Sign-out successful.
         // alert('You sign-out successfully');
         toast('logOut successfully', {
-          theme: 'light',
+          theme: theme,
           style: {
             // backgroundColor: 'yellow',
             color: 'green',
@@ -41,7 +47,7 @@ const Navbar = () => {
         // const errorCode = error.code;
         const errorMessage = error.message;
         toast.error(errorMessage, {
-          theme: 'colored',
+          theme: theme,
         });
       });
   };
@@ -110,8 +116,18 @@ const Navbar = () => {
         )}
       </li>
       <li>
-        <button onClick={toggleTheme} className="btn btn-circle">
-          {theme === 'light' ? '🌙' : '☀️'}
+        <button
+          onClick={toggleTheme}
+          className={`flex flex-col hover:bg-[#c09cff86]`}
+        >
+          {theme === 'light' ? (
+            <MdDarkMode className="text-lg text-primary" />
+          ) : (
+            <MdLightMode className="text-lg text-[#98ffdd]" />
+          )}
+          <span className="text-[0.70rem] text-secondary ">
+            {theme === 'light' ? 'Dark Mode' : 'Light Mode'}
+          </span>
         </button>
       </li>
     </>
@@ -119,7 +135,7 @@ const Navbar = () => {
 
   return (
     <div
-      className={`${theme === 'dark' ? 'bg-base-200' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
+      className={`${theme === 'dark' ? 'bg-base-300' : 'bg-linear-to-br from-sky-200 via-indigo-50 to-violet-200'}`}
     >
       <div className="max-lg:collapse rounded-md w-full">
         <input id="navbar-1-toggle" className="peer hidden" type="checkbox" />

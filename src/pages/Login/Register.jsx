@@ -8,9 +8,11 @@ import { FaRegEye } from 'react-icons/fa';
 import { LuEyeClosed } from 'react-icons/lu';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../provider/AuthContext';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const Register = () => {
   const { createUser, setUser, updateUser, googleSignIn } = use(AuthContext);
+  const { theme } = use(ThemeContext);
 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -91,7 +93,7 @@ const Register = () => {
             setUser(user);
           });
         toast.success('Account create successfully', {
-          theme: 'colored',
+          theme: theme,
         });
         navigate(`${location?.state?.from ? location?.state?.from : '/'}`);
         // setTimeout(() => {
@@ -106,7 +108,7 @@ const Register = () => {
         console.log(errorCode, errorMessage);
         setError(errorCode);
         toast.error(errorMessage, {
-          theme: 'colored',
+          theme: theme,
         });
         // alert(errorMessage);
         // ..
@@ -141,7 +143,7 @@ const Register = () => {
 
         setSuccess(true);
         toast.success('Login successfully', {
-          theme: 'colored',
+          theme: theme,
         });
         navigate(`${location?.state?.from ? location?.state?.from : '/'}`);
         // setTimeout(() => {
@@ -152,7 +154,7 @@ const Register = () => {
         const errorMessage = error.message;
         setError(errorCode);
         toast.error(errorMessage, {
-          theme: 'colored',
+          theme: theme,
         });
         // alert(errorMessage, errorCode);
       });
@@ -172,7 +174,9 @@ const Register = () => {
   };
 
   return (
-    <div className="bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2] flex items-center justify-center min-h-screen px-4 py-40">
+    <div
+      className={`flex items-center justify-center min-h-screen px-4 py-40 ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-[#72CFE7]/30 via-[#fbc3f1]/20 to-[#fbe4c2]'}`}
+    >
       <div className="max-w-11/12 w-full grid md:grid-cols-2 items-center gap-12">
         {/* LEFT SIDE IMAGE */}
         <div className="hidden md:flex justify-center">
@@ -193,7 +197,9 @@ const Register = () => {
           </div>
 
           {/* TITLE */}
-          <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+          <h2
+            className={`text-3xl font-semibold text-center mb-8 ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}
+          >
             Join FinEase Today
           </h2>
 

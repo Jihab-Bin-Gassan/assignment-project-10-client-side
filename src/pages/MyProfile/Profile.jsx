@@ -3,13 +3,19 @@ import { use } from 'react';
 // import { AuthContext } from '../../provider/AuthProvider';
 import { Link } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const Profile = () => {
   const { user } = use(AuthContext);
+  const { theme } = use(ThemeContext);
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#72CFE7]/20 via-[#fbc3f1]/20 to-[#fbe4c2]/40 flex items-center justify-center px-4 py-30">
-      <div className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-8">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 py-30 ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-[#72CFE7]/20 via-[#fbc3f1]/20 to-[#fbe4c2]/40'}`}
+    >
+      <div
+        className={`w-full max-w-md shadow-2xl rounded-3xl p-8 ${theme === 'dark' ? 'bg-base-300' : 'bg-white '}`}
+      >
         {/* TITLE */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-[#5c23be]">My Profile</h2>
@@ -36,28 +42,40 @@ const Profile = () => {
         {/* PROFILE INFO */}
         <div className="space-y-5">
           {/* NAME */}
-          <div className="bg-[#f9f9f9] rounded-xl p-4 flex items-center gap-4">
-            <div className="bg-[#72CFE7]/20 p-3 rounded-full">
+          <div
+            className={`rounded-xl p-4 flex items-center gap-4 ${theme === 'dark' ? 'bg-base-100' : 'bg-[#f9f9f9]'}`}
+          >
+            <div
+              className={`p-3 rounded-full ${theme === 'dark' ? 'bg-[#72CFE7]' : 'bg-[#72CFE7]/20'}`}
+            >
               <User className="text-[#5c23be]" size={22} />
             </div>
 
             <div>
               <p className="text-sm text-gray-500">Name</p>
-              <h4 className="font-semibold text-gray-800">
+              <h4
+                className={`font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}
+              >
                 {user && user.displayName}
               </h4>
             </div>
           </div>
 
           {/* EMAIL */}
-          <div className="bg-[#f9f9f9] rounded-xl p-4 flex items-center gap-4">
-            <div className="bg-[#fbc3f1]/30 p-3 rounded-full">
+          <div
+            className={`rounded-xl p-4 flex items-center gap-4 ${theme === 'dark' ? 'bg-base-100' : 'bg-[#f9f9f9]'}`}
+          >
+            <div
+              className={`p-3 rounded-full ${theme === 'dark' ? 'bg-[#72CFE7]' : 'bg-[#fbc3f1]/30'}`}
+            >
               <Mail className="text-[#5c23be]" size={22} />
             </div>
 
             <div>
               <p className="text-sm text-gray-500">Email</p>
-              <h4 className="font-semibold text-gray-800">
+              <h4
+                className={`font-semibold ${theme === 'dark' ? 'text-gray-200' : 'text-gray-800'}`}
+              >
                 {user && user.email}
               </h4>
             </div>

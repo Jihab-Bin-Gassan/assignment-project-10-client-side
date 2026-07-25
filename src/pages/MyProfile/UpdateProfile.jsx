@@ -4,11 +4,14 @@ import { User } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { AuthContext } from '../../provider/AuthContext';
+import { ThemeContext } from '../../provider/ThemeContext';
 // import { Mail, User } from 'lucide-react';
 
 const UpdateProfile = () => {
   // const { user, setUser, updateUser, updateUserEmail } = use(AuthContext);
   const { user, setUser, updateUser } = use(AuthContext);
+  const { theme } = use(ThemeContext);
+
   const navigate = useNavigate();
 
   const handleUpdateProfile = e => {
@@ -80,8 +83,12 @@ const UpdateProfile = () => {
   // };
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#72CFE7]/20 via-[#fbc3f1]/20 to-[#fbe4c2]/40 flex items-center justify-center px-4 py-30">
-      <div className="w-full max-w-lg bg-white rounded-3xl shadow-2xl p-8">
+    <div
+      className={`min-h-screen flex items-center justify-center px-4 py-30 ${theme === 'dark' ? 'bg-base-100' : 'bg-linear-to-br from-[#72CFE7]/20 via-[#fbc3f1]/20 to-[#fbe4c2]/40'}`}
+    >
+      <div
+        className={`w-full max-w-lg rounded-3xl shadow-2xl p-8 ${theme === 'dark' ? 'bg-base-300' : 'bg-white'}`}
+      >
         {/* TITLE */}
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-[#5c23be]">Update Profile</h2>

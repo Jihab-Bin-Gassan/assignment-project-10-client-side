@@ -57,9 +57,12 @@ import {
 } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { AuthContext } from '../../provider/AuthContext';
+import { ThemeContext } from '../../provider/ThemeContext';
 
 const AddTransactions = () => {
   const { user } = use(AuthContext);
+  const { theme } = use(ThemeContext);
+
   console.log(user);
 
   const addTransactionsModalRef = useRef(null);
@@ -189,7 +192,9 @@ const AddTransactions = () => {
         console.log('after placing transaction', data);
 
         if (data.insertedId) {
-          toast.success('Transaction Added Successfully');
+          toast.success('Transaction Added Successfully', {
+            theme: theme,
+          });
           addTransactionsModalRef.current.close();
           e.target.reset();
         }
@@ -314,7 +319,7 @@ const AddTransactions = () => {
                         name="category"
                         defaultValue="Salary"
                         // onChange={handleChange}
-                        className="w-full bg-transparent outline-none"
+                        className="w-full outline-none bg-base-100"
                       >
                         <option value="salary">Salary</option>
                         <option value="freelance">Freelance</option>
@@ -345,8 +350,12 @@ const AddTransactions = () => {
                         // onChange={handleChange}
                         className="w-full bg-transparent outline-none"
                       >
-                        <option value="Income">Income</option>
-                        <option value="Expense">Expense</option>
+                        <option className="bg-base-100" value="Income">
+                          Income
+                        </option>
+                        <option className="bg-base-100" value="Expense">
+                          Expense
+                        </option>
                       </select>
                     </label>
                   </div>
@@ -378,7 +387,7 @@ const AddTransactions = () => {
                       </span>
                     </label>
 
-                    <label className="input input-bordered flex items-center gap-3 rounded-xl bg-gray-200 cursor-not-allowed">
+                    <label className="input input-bordered flex items-center gap-3 rounded-xl bg-base-300 cursor-not-allowed">
                       <User size={18} className="text-cyan-500" />
 
                       <input
@@ -387,7 +396,7 @@ const AddTransactions = () => {
                         defaultValue={user?.displayName}
                         // onChange={handleChange}
                         placeholder="Enter user name"
-                        className="grow cursor-not-allowed"
+                        className="grow cursor-not-allowed bg-base-300"
                         readOnly
                       />
                     </label>
@@ -399,7 +408,7 @@ const AddTransactions = () => {
                       <span className="label-text font-semibold">Email</span>
                     </label>
 
-                    <label className="input input-bordered flex items-center gap-3 rounded-xl bg-gray-200 cursor-not-allowed">
+                    <label className="input input-bordered flex items-center gap-3 rounded-xl bg-base-300 cursor-not-allowed">
                       <Mail size={18} className="text-violet-500" />
 
                       <input
@@ -408,7 +417,7 @@ const AddTransactions = () => {
                         defaultValue={user?.email}
                         // onChange={handleChange}
                         placeholder="Enter email"
-                        className="grow cursor-not-allowed"
+                        className="grow cursor-not-allowed bg-base-300"
                         readOnly
                       />
                     </label>

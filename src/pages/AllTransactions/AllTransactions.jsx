@@ -43,12 +43,15 @@ import { CalendarDays, CircleX, FileText, Wallet } from 'lucide-react';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router';
 import { IoIosArrowBack } from 'react-icons/io';
+import { ThemeContext } from '../../provider/ThemeContext';
 // import withReactContent from 'sweetalert2-react-content';
 
 // const MySwal = withReactContent(Swal);
 
 const AllTransactions = () => {
   const { user } = use(AuthContext);
+  const { theme } = use(ThemeContext);
+
   const [transactions, setTransactions] = useState([]);
 
   const [sortedTransactions, setSortedTransactions] = useState([]);
@@ -151,6 +154,12 @@ const AllTransactions = () => {
           title: 'Update Successfully',
           text: 'Now check the updated transaction',
           icon: 'success',
+
+          background: theme === 'dark' ? '#1D232A' : '#FFFFFF',
+
+          color: theme === 'dark' ? '#F8FAFC' : '#111827',
+
+          confirmButtonColor: '#5c23be',
         });
 
         updateRef.current.close();
@@ -162,6 +171,10 @@ const AllTransactions = () => {
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
       icon: 'warning',
+      background: theme === 'dark' ? '#1D232A' : '#FFFFFF',
+
+      color: theme === 'dark' ? '#F8FAFC' : '#111827',
+
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
@@ -191,6 +204,8 @@ const AllTransactions = () => {
               title: 'Deleted!',
               text: 'Your transaction has been deleted.',
               icon: 'success',
+              background: theme === 'dark' ? '#1D232A' : '#FFFFFF',
+              color: theme === 'dark' ? '#F8FAFC' : '#111827',
             });
           });
     });
@@ -374,7 +389,9 @@ const AllTransactions = () => {
                       className={
                         sortedText === 'newest' || sortedText === 'oldest'
                           ? 'bg-[#9963f7a8] text-white'
-                          : 'bg-white text-black'
+                          : theme === 'dark'
+                            ? 'bg-base-100 text-white'
+                            : 'bg-white text-black'
                       }
                     >
                       Date
@@ -413,7 +430,9 @@ const AllTransactions = () => {
                         sortedText === 'amountHigh' ||
                         sortedText === 'amountLow'
                           ? 'bg-[#9963f7a8] text-white'
-                          : 'bg-white text-black'
+                          : theme === 'dark'
+                            ? 'bg-base-100 text-white'
+                            : 'bg-white text-black'
                       }
                     >
                       Amount
@@ -453,7 +472,9 @@ const AllTransactions = () => {
                       className={
                         sortedText === 'income' || sortedText === 'expense'
                           ? 'bg-[#9963f7a8] text-white'
-                          : 'bg-white text-black'
+                          : theme === 'dark'
+                            ? 'bg-base-100 text-white'
+                            : 'bg-white text-black'
                       }
                     >
                       Type
@@ -501,7 +522,9 @@ const AllTransactions = () => {
                         sortedText === 'buy' ||
                         sortedText === 'others'
                           ? 'bg-[#9963f7a8] text-white'
-                          : 'bg-white text-black'
+                          : theme === 'dark'
+                            ? 'bg-base-100 text-white'
+                            : 'bg-white text-black'
                       }
                     >
                       Category
@@ -895,8 +918,12 @@ const AllTransactions = () => {
                       // onChange={handleChange}
                       className="w-full bg-transparent outline-none"
                     >
-                      <option value="Income">Income</option>
-                      <option value="Expense">Expense</option>
+                      <option className="bg-base-100" value="Income">
+                        Income
+                      </option>
+                      <option className="bg-base-100" value="Expense">
+                        Expense
+                      </option>
                     </select>
                   </label>
                 </div>
