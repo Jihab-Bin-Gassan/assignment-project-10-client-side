@@ -104,7 +104,7 @@ const Login = () => {
         const errorMessage = error.message;
         setError(errorCode);
         toast.error(errorMessage, {
-          theme: 'colored',
+          theme: theme,
         });
         // alert(errorMessage, errorCode);
       });
