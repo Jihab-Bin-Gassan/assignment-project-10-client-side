@@ -92,88 +92,153 @@
 
 // export default FinancialOverview;
 
-// ================================================================================
-import { useEffect, useState } from 'react';
+// ===============================================================================================
+import { use, useEffect, useState } from 'react';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import FinancialBalance from './FinancialBalance';
+import { AuthContext } from '../../provider/AuthContext';
+import ReconnectServer from '../ReconnectServer/ReconnectServer';
 
 const FinancialOverview = () => {
+  const { user } = use(AuthContext);
   const [balance, setBalance] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const fetchBalance = async () => {
-    try {
-      const res = await fetch('http://localhost:3000/transactions');
+  // const fetchBalance = async () => {
+  //   try {
+  //     const res = await fetch('http://localhost:3000/transactions');
 
-      if (!res.ok) {
-        throw new Error('Server Error');
-      }
+  //     if (!res.ok) {
+  //       throw new Error('Server Error');
+  //     }
 
-      const data = await res.json();
+  //     const data = await res.json();
 
-      setBalance(data);
-      setError('');
-      setLoading(false);
+  //     setBalance(data);
+  //     setError('');
+  //     setLoading(false);
 
-      return true; // success
-    } catch (error) {
-      console.log(error);
-      setError('Trying to reconnect...');
-      return false; // failed
-    }
-  };
+  //     return true; // success
+  //   } catch (error) {
+  //     console.log(error);
+  //     setError('Trying to reconnect...');
+  //     return false; // failed
+  //   }
+  // };
 
-  // ======= fetchBalance().then() this line have a warning from ESLint. so try to avoid writing code like this.
+  // // ======= fetchBalance().then() this line have a warning from ESLint. so try to avoid writing code like this.
+  // // useEffect(() => {
+  // //   let interval;
+
+  // //   fetchBalance().then(success => {
+  // //     // only retry when failed
+  // //     if (!success) {
+  // //       interval = setInterval(async () => {
+  // //         const retrySuccess = await fetchBalance();
+
+  // //         // stop retry after success
+  // //         if (retrySuccess) {
+  // //           clearInterval(interval);
+  // //         }
+  // //       }, 3000);
+  // //     }
+  // //   });
+
+  // //   return () => clearInterval(interval);
+  // // }, []);
+
+  // // ==============
   // useEffect(() => {
   //   let interval;
 
-  //   fetchBalance().then(success => {
-  //     // only retry when failed
+  //   const loadData = async () => {
+  //     const success = await fetchBalance();
+
   //     if (!success) {
   //       interval = setInterval(async () => {
   //         const retrySuccess = await fetchBalance();
 
-  //         // stop retry after success
   //         if (retrySuccess) {
   //           clearInterval(interval);
   //         }
   //       }, 3000);
   //     }
-  //   });
+  //   };
+
+  //   loadData();
 
   //   return () => clearInterval(interval);
   // }, []);
 
-  // ==============
+  // ===============================================================================================
   useEffect(() => {
+    if (!user?.email) {
+      function loading() {
+        setLoading(true);
+        setTimeout(() => {
+          setLoading(false);
+          setBalance([]);
+        }, 2000);
+      }
+      loading();
+      return;
+    }
+
     let interval;
 
-    const loadData = async () => {
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:3000/transactions?email=${user.email}`,
+        );
+
+        if (!res.ok) {
+          throw new Error('Server Error');
+        }
+
+        const data = await res.json();
+
+        setBalance(data);
+        setError('');
+        setLoading(false);
+
+        return true;
+      } catch (err) {
+        console.error(err);
+
+        setError('Trying to reconnect...');
+        setLoading(false);
+
+        return false;
+      }
+    };
+
+    const load = async () => {
       const success = await fetchBalance();
 
       if (!success) {
         interval = setInterval(async () => {
-          const retrySuccess = await fetchBalance();
-
-          if (retrySuccess) {
+          if (await fetchBalance()) {
             clearInterval(interval);
           }
         }, 3000);
       }
     };
 
-    loadData();
+    load();
 
     return () => clearInterval(interval);
-  }, []);
+  }, [user]);
+
+  // ===============================================================================================
 
   if (loading) {
     return <LoadingSpinner />;
   }
 
   if (error) {
-    return <p>{error}</p>;
+    return <ReconnectServer />;
   }
 
   // const incomeData = balance.find(item => item.type === 'Income');
